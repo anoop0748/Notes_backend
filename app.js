@@ -18,6 +18,7 @@ app.use((req, res, next) => {
   );
   next();
 });
+mongoose.set('strictQuery', false);
 mongoose.connect(mongoDBURL,console.log("Connected To Database"));
 app.use(body_parser.json());
 app.use('/login/user/*', async (req, res, next) => {
