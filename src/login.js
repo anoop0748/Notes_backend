@@ -37,6 +37,21 @@ login.post("/login/user", async(req,res)=>{
         
     }
 })
+login.get("/login/user/event/get" , async(req,res)=>{
+    try{
+        let id = req.user;
+        let data = await reg_data.find({_id:id})
+        res.header(200).json({
+            data
+        })
+
+    }catch(e){
+        res.header(404).json({
+            status:"Failed",
+            massage:"event cam not post"
+        })
+    }
+})
 login.post("/login/user/event/post",async(req,res)=>{
     try{
         
