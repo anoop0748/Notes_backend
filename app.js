@@ -1,15 +1,16 @@
 const express = require('express');
 const jwt  = require("jsonwebtoken");
 const mongoose = require("mongoose");
-const body_parser = require('body-parser')
+const body_parser = require('body-parser');
+const cors = require('cors')
 const mongoDBURL = process.env.mongoDBURL || "mongodb://localhost:27017";
-const port = process.env.port || 3000;
+const port = process.env.port || 5000;
 const reg = require("./src/registration");
 const login = require('./src/login')
 
 const app = express();
 app.use(express.json());
-
+app.use(cors())
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.header(
