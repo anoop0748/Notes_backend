@@ -23,7 +23,7 @@ app.use('/login/user/*', async (req, res, next) => {
                 })
             }
             req.user = decoded.data;
-            console.log(req.body)
+           
             next();
         })
     }

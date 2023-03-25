@@ -39,7 +39,7 @@ login.post("/login/user", async(req,res)=>{
 })
 login.post("/login/user/event/post",async(req,res)=>{
     try{
-        console.log(req.user)
+        
         const id  = req.user;
         const data = req.body;
         let add_data = await reg_data.updateMany({_id:id}, {$push:{"data": data}})
@@ -58,16 +58,19 @@ login.post("/login/user/event/post",async(req,res)=>{
 login.put("/login/user/event/put",async(req,res)=>{
     try{
         let id = req.user;
+        
         let update_event = req.body;
         let stored_event = await reg_data.find({_id:id});
-        let len = stored_event.data.length;
+        console.log(stored_event[0].data.length)
+        let len = stored_event[0].data.length;
         for(let i = 0; i < len; i++){
             if(i === update_event.idx){
-                stored_event.data[i] = update_event.data;
+                stored_event[0].data[i] = update_event.data;
+                console.log(stored_event[0].data[i])
                 break;
             }
         }
-        let add_data = await reg_data.updateOne({_id:id}, {$splice:{"data": update_event.idx}})
+        let add_data = await reg_data.updateOne({_id:id}, {$set:{data: stored_event[0].data}})
         res.header(200).json({
             status:"Successful",
             add_data
@@ -80,22 +83,23 @@ login.put("/login/user/event/put",async(req,res)=>{
         })
     }
 })
+
 login.delete("/login/user/event/delete", async(req,res)=>{
     try{
         let id = req.user;
         let idx = req.body.idx ;
         let stored_event = await reg_data.find({_id:id});
-        let len = stored_event.data.length;
+        let len = stored_event[0].data.length;
         let data  = [];
         for(let i = 0; i < len; i++){
             if(i === idx){
                 continue;
             }
             else{
-                data.push(stored_event.data[i]);
+                data.push(stored_event[0].data[i]);
             }
         }
-        let add_data = await reg_data.updateOne({_id:id}, {$set:{"data": data}})
+        let add_data = await reg_data.updateOne({_id:id}, {$set:{data: data}})
         res.header(200).json({
             status:"Successful",
             add_data
