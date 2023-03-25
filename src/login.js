@@ -71,10 +71,12 @@ login.post("/login/user/event/post",async(req,res)=>{
     }
 })
 login.put("/login/user/event/put",async(req,res)=>{
+    console.log(req.body)
     try{
         let id = req.user;
         
         let update_event = req.body;
+       
         let stored_event = await reg_data.find({_id:id});
         console.log(stored_event[0].data.length)
         let len = stored_event[0].data.length;
@@ -94,7 +96,7 @@ login.put("/login/user/event/put",async(req,res)=>{
     }catch(e){
         res.header(404).json({
             status:"Failed",
-            massage:"event cam not post"
+            massage:"event cam not Update"
         })
     }
 })
@@ -102,7 +104,7 @@ login.put("/login/user/event/put",async(req,res)=>{
 login.delete("/login/user/event/delete", async(req,res)=>{
     try{
         let id = req.user;
-        let idx = req.body.idx ;
+        let idx = req.headers.index ;
         let stored_event = await reg_data.find({_id:id});
         let len = stored_event[0].data.length;
         let data  = [];
@@ -123,7 +125,7 @@ login.delete("/login/user/event/delete", async(req,res)=>{
     }catch(e){
         res.header(404).json({
             status:"Failed",
-            massage:"event cam not post"
+            massage:"event cam not delete"
         })
     }
 })

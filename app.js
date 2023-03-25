@@ -28,6 +28,7 @@ mongoose.connect(mongoDBURL, (e, db) => {
 app.use(body_parser.json());
 app.use('/login/user/*', async (req, res, next) => {
     const token = req.headers.authorization;
+    console.log(req.headers.index)
     if (token) {
         jwt.verify(token, "NotesUser", function (err, decoded) {
             if (err) {
