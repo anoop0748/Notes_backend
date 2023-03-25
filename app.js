@@ -20,6 +20,7 @@ app.use((req, res, next) => {
 });
 mongoose.set('strictQuery', false);
 mongoose.connect(mongoDBURL, (e, db) => {
+    console.log(mongoDBURL)
     if (e) { console.log("DataBase Error :", e) }
     else { console.log('connected to DB') }
 })
