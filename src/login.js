@@ -67,7 +67,7 @@ login.put("/login/user/event/put",async(req,res)=>{
                 break;
             }
         }
-        let add_data = await reg_data.updateOne({_id:id}, {$set:{"data": stored_event.data}})
+        let add_data = await reg_data.updateOne({_id:id}, {$splice:{"data": update_event.idx}})
         res.header(200).json({
             status:"Successful",
             add_data

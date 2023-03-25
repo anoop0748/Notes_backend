@@ -2,8 +2,8 @@ const express = require('express');
 const jwt  = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const body_parser = require('body-parser')
-const mongoDBURL = "mongodb://localhost:27017";
-const port = 3000;
+const mongoDBURL = process.env.MongoDbUrl || "mongodb://localhost:27017";
+const port = process.env.port || 3000;
 const reg = require("./src/registration");
 const login = require('./src/login')
 
