@@ -2,7 +2,7 @@ const express = require('express');
 const jwt  = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const body_parser = require('body-parser')
-const mongoDBURL = process.env.MongoDbUrl || "mongodb://localhost:27017";
+const mongoDBURL = process.env.mongoDBURL || "mongodb://localhost:27017";
 const port = process.env.port || 3000;
 const reg = require("./src/registration");
 const login = require('./src/login')
@@ -18,7 +18,11 @@ app.use((req, res, next) => {
   );
   next();
 });
-mongoose.connect(mongoDBURL,console.log("Connected To Database"));
+mongoose.set('strictQuery', false);
+mongoose.connect(mongoDBURL, (e, db) => {
+    if (e) { console.log("DataBase Error :", e) }
+    else { console.log('connected to DB') }
+})
 app.use(body_parser.json());
 app.use('/login/user/*', async (req, res, next) => {
     const token = req.headers.authorization;
